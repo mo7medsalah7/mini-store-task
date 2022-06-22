@@ -1,6 +1,7 @@
 import { ApolloProvider, InMemoryCache, ApolloClient } from '@apollo/client';
 import '../styles/globals.css';
 import Page from '../components/Page';
+import { CartStateProvider } from '../utils.js/cartState';
 
 const apollo = new ApolloClient({
   uri: 'http://localhost:4000/',
@@ -10,9 +11,11 @@ const apollo = new ApolloClient({
 function MyApp({ Component, pageProps }) {
   return (
     <ApolloProvider client={apollo}>
-      <Page>
-        <Component {...pageProps} />
-      </Page>
+      <CartStateProvider>
+        <Page>
+          <Component {...pageProps} />
+        </Page>
+      </CartStateProvider>
     </ApolloProvider>
   );
 }
