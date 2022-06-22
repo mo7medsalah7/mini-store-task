@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { useSelector } from 'react-redux';
 
 const NavContainer = styled.nav`
   padding: 1.5rem 4rem;
@@ -52,9 +53,31 @@ const Right = styled.div`
   display: flex;
   justify-content: end;
   align-items: center;
+
+  button.cart-btn {
+    position: relative;
+  }
+  span.cart-count {
+    font-size: 14px;
+    font-weight: 700;
+    background-color: #000;
+    color: #fff;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -11px;
+    right: -15px;
+  }
 `;
 
 export default function Header() {
+  const { cartCount, cartItems } = useSelector((state) => state?.cart);
+  console.log(cartItems);
   return (
     <NavContainer>
       <Left>
@@ -126,7 +149,7 @@ export default function Header() {
             />
           </svg>
         </button>
-        <button>
+        <button className="cart-btn">
           <svg
             width="20"
             height="20"
@@ -147,6 +170,7 @@ export default function Header() {
               fill="#43464E"
             />
           </svg>
+          <span className="cart-count">{cartCount}</span>
         </button>
       </Right>
     </NavContainer>

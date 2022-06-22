@@ -134,6 +134,10 @@ const Description = styled.p`
 `;
 
 export default function PDP({ query }) {
+  // Redux Toolkit Store for Cart
+  const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state?.cart);
+  // console.log(cartItems);
   // Apollo useQuery
   const { loading, error, data } = useQuery(PRODUCT_QUERY, {
     variables: {
@@ -160,6 +164,7 @@ export default function PDP({ query }) {
   }
 
   const price = getPrice(data?.product, 'USD');
+
   return (
     <GridContainer>
       <Left>
@@ -199,7 +204,9 @@ export default function PDP({ query }) {
             </ProductPrice>
           ))}
         </PriceContainer>
-        <AddToCartButton>add to cart</AddToCartButton>
+        <AddToCartButton onClick={() => dispatch(addToCart(data?.product))}>
+          add to cart
+        </AddToCartButton>
         <Description>{data?.product?.description}</Description>
       </Details>
     </GridContainer>
