@@ -11,6 +11,7 @@
   "dependencies": {
     "@apollo/client": "^3.2.9",
     "@apollo/link-error": "^2.0.0-beta.3",
+    "@reduxjs/toolkit": "^1.8.2",
     "axios": "^0.21.1",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
@@ -18,6 +19,7 @@
     "next-with-apollo": "^5.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.0.2",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {

@@ -8,6 +8,9 @@ import heroImage from '../utils.js/heroImage';
 import Title from './Title';
 import getPrice from '../utils.js/get-price';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../store/cartSlice';
+
 const PRODUCT_QUERY = gql`
   query PRODUCT_QUERY($id: String!) {
     product(id: $id) {
@@ -140,9 +143,6 @@ export default function PDP({ query }) {
   // React useState to manage the bigger image
   const [imageUrl, setImageUrl] = React.useState({ url: '' });
 
-  // Supposing the bigger image is the first one
-  // const heroImage = `${data?.product.gallery.find((url) => url)}`;
-
   useEffect(() => {
     if (!loading && data) {
       setImageUrl({ url: heroImage(data.product) });
@@ -154,12 +154,12 @@ export default function PDP({ query }) {
   // Handling Error
   if (error) return <p>Error: {error.message} ....</p>;
 
+  // changing hero image
   function handleChangeImage(url) {
     setImageUrl({ url });
   }
 
   const price = getPrice(data?.product, 'USD');
-  console.log(price);
   return (
     <GridContainer>
       <Left>

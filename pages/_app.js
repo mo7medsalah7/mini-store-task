@@ -1,8 +1,8 @@
 import { ApolloProvider, InMemoryCache, ApolloClient } from '@apollo/client';
 import '../styles/globals.css';
 import Page from '../components/Page';
-import { CartStateProvider } from '../utils.js/cartState';
-
+import store from '../store/index';
+import { Provider } from 'react-redux';
 const apollo = new ApolloClient({
   uri: 'http://localhost:4000/',
   cache: new InMemoryCache(),
@@ -11,11 +11,11 @@ const apollo = new ApolloClient({
 function MyApp({ Component, pageProps }) {
   return (
     <ApolloProvider client={apollo}>
-      <CartStateProvider>
+      <Provider store={store}>
         <Page>
           <Component {...pageProps} />
         </Page>
-      </CartStateProvider>
+      </Provider>
     </ApolloProvider>
   );
 }
