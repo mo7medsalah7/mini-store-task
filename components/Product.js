@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
 import Link from 'next/link';
+import heroImage from '../utils.js/heroImage';
 
 const CategoryTitle = styled.div`
   margin-bottom: 3rem;
@@ -111,7 +112,6 @@ function Product({ item }) {
               id: item.id,
             },
           });
-          console.log(data?.product);
           // Loading
           if (loading) return <p>Loading ....</p>;
           // Handling Error
@@ -119,8 +119,6 @@ function Product({ item }) {
 
           // Grab Product
           const { product } = data;
-          // Getting Image Url
-          const imageUrl = `${product.gallery.find((url) => url)}`;
           // Filtering Price On Label 'USD'
           const price = product.prices.filter(
             (price) => price.currency.label === 'USD'
@@ -130,7 +128,7 @@ function Product({ item }) {
             <Link href={`/product/${product.id}`}>
               <SingleProduct key={product.id}>
                 <FigureContainer>
-                  <ProductImage src={imageUrl} alt="product image" />
+                  <ProductImage src={heroImage(product)} alt="product image" />
                   {!product.inStock && (
                     <Overlay>
                       <p>OUT OF STOCK</p>
