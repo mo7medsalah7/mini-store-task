@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import gql from 'graphql-tag';
 import { useQuery } from '@apollo/client';
+import Link from 'next/link';
 
 const CategoryTitle = styled.div`
   margin-bottom: 3rem;
@@ -29,19 +30,18 @@ const SingleProduct = styled.div`
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
     -webkit-box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
   }
-  h2.product-title {
-    font-size: 18px;
-    font-weight: 400;
-    line-height: 30px;
-    color: ${(props) => (!props.inStock ? '#8D8F9A' : `var(--c-black)`)};
-  }
-  .price {
-    span {
-      font-weight: 700;
-      font-size: 18px;
-      color: ${(props) => !props.inStock && '#8D8F9A'};
-    }
-  }
+`;
+
+const ProductTitle = styled.h2`
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 30px;
+  color: ${(props) => (!props.inStock ? '#8D8F9A' : '#000')};
+`;
+const ProductPrice = styled.span`
+  font-weight: 700;
+  font-size: 18px;
+  color: ${(props) => (!props.inStock ? '#8D8F9A' : '#000')};
 `;
 
 const FigureContainer = styled.div`
@@ -127,25 +127,30 @@ function Product({ item }) {
           );
 
           return (
-            <SingleProduct key={product.id}>
-              <FigureContainer>
-                <ProductImage src={imageUrl} alt="product image" />
-                {!product.inStock && (
-                  <Overlay>
-                    <p>OUT OF STOCK</p>
-                  </Overlay>
-                )}
-              </FigureContainer>
-              <h2 className="product-title" inStock={product?.inStock}>
-                {product.name}
-              </h2>
-              {price.map((item) => (
-                <span>
-                  {item.currency.symbol}
-                  {item.amount}
-                </span>
-              ))}
-            </SingleProduct>
+            <Link href={`/product/${product.id}`}>
+              <SingleProduct key={product.id}>
+                <FigureContainer>
+                  <ProductImage src={imageUrl} alt="product image" />
+                  {!product.inStock && (
+                    <Overlay>
+                      <p>OUT OF STOCK</p>
+                    </Overlay>
+                  )}
+                </FigureContainer>
+                <ProductTitle
+                  className="product-title"
+                  inStock={product?.inStock}
+                >
+                  {product.name}
+                </ProductTitle>
+                {price.map((item) => (
+                  <ProductPrice inStock={product?.inStock}>
+                    {item.currency.symbol}
+                    {item.amount}
+                  </ProductPrice>
+                ))}
+              </SingleProduct>
+            </Link>
           );
         })}
       </ProductsContainer>
