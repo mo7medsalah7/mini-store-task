@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import styled, { createGlobalStyle } from 'styled-components';
 import Header from './Header';
+import Products from './Products';
 
 const GlobalStyles = createGlobalStyle`
   @font-face {
@@ -55,6 +56,7 @@ export default function Page({ children }) {
     <div>
       <GlobalStyles />
       <Header />
+      <Products />
       <InnerStyles>{children}</InnerStyles>
     </div>
   );
