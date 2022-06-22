@@ -9,16 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "12.1.6",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
     "@apollo/client": "^3.2.9",
     "@apollo/link-error": "^2.0.0-beta.3",
     "axios": "^0.21.1",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
+    "next": "12.1.6",
     "next-with-apollo": "^5.1.1",
-    "styled-components": "^5.2.1"
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "eslint": "8.18.0",
