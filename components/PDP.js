@@ -11,6 +11,7 @@ import getPrice from '../utils.js/get-price';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import Attribute from './Attribute';
+import Button from './Button';
 
 const PRODUCT_QUERY = gql`
   query PRODUCT_QUERY($id: String!) {
@@ -105,21 +106,6 @@ const ProductPrice = styled.span`
   font-size: 30px;
 `;
 
-const AddToCartButton = styled.button`
-  all: unset;
-  background-color: #5ece7b;
-  background-color: ${(props) =>
-    props.inStock ? '#5ece7b' : 'rgba(94, 206, 123, 0.5)'};
-  color: #fff;
-  text-transform: uppercase;
-  cursor: ${(props) => (props.inStock ? 'pointer' : 'not-allowed')};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 1rem 1rem;
-`;
 const Description = styled.p`
   font-size: 16px;
   font-weight: 500;
@@ -162,6 +148,11 @@ export default function PDP({ query }) {
   const dreamProduct = { ...data?.product, qty: 1 };
   console.log(dreamProduct);
 
+  function handleAddToCart(data) {
+    // e.preventdefault();
+    dispatch(addToCart(data));
+  }
+
   return (
     <GridContainer>
       <Left>
@@ -197,12 +188,11 @@ export default function PDP({ query }) {
           ))}
         </PriceContainer>
 
-        <AddToCartButton
-          onClick={() => dispatch(addToCart(dreamProduct))}
+        <Button
+          handleClick={() => handleAddToCart(dreamProduct)}
           inStock={data?.product.inStock}
-        >
-          add to cart
-        </AddToCartButton>
+          data="Add To Cart"
+        ></Button>
         <Description>{data?.product?.description}</Description>
       </Details>
     </GridContainer>
