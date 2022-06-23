@@ -10,6 +10,7 @@ import getPrice from '../utils.js/get-price';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
+import Attribute from './Attribute';
 
 const PRODUCT_QUERY = gql`
   query PRODUCT_QUERY($id: String!) {
@@ -24,6 +25,13 @@ const PRODUCT_QUERY = gql`
         currency {
           label
           symbol
+        }
+      }
+      attributes {
+        items {
+          displayValue
+          value
+          id
         }
       }
     }
@@ -92,23 +100,6 @@ const PriceContainer = styled.div`
   }
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 2rem;
-  button {
-    padding: 1.5rem 3rem;
-    cursor: pointer;
-    border: 1px solid #1d1f22;
-    font-size: 16px;
-    font-weight: 400;
-
-    &:hover {
-      background-color: #1d1f22;
-      color: #ffffff;
-    }
-  }
-`;
-
 const ProductPrice = styled.span`
   font-weight: 700;
   font-size: 30px;
@@ -164,7 +155,7 @@ export default function PDP({ query }) {
   }
 
   const price = getPrice(data?.product, 'USD');
-
+  console.log(data?.product?.attributes);
   return (
     <GridContainer>
       <Left>
@@ -187,12 +178,7 @@ export default function PDP({ query }) {
         <p>Running Short</p>
         <SizeContainer>
           <h3>SIZE</h3>
-          <ButtonContainer>
-            <button>XS</button>
-            <button>S</button>
-            <button>M</button>
-            <button>L</button>
-          </ButtonContainer>
+          <Attribute attributes={data?.product?.attributes[0]} />
         </SizeContainer>
         <PriceContainer>
           <h3>PRICE</h3>

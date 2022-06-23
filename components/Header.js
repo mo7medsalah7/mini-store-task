@@ -77,7 +77,6 @@ const Right = styled.div`
 
 export default function Header() {
   const { cartCount, cartItems } = useSelector((state) => state?.cart);
-  console.log(cartItems);
   return (
     <NavContainer>
       <Left>

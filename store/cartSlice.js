@@ -1,20 +1,16 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
-    cartItems: null,
+    cartItems: [],
     cartCount: 0,
   },
 
   reducers: {
     addToCart: (state, action) => {
-      console.log(state.cartItems);
       state.cartCount += 1;
-      state.cartItems = {
-        ...state.cartItems,
-        payload: action.payload,
-      };
+      state.cartItems = [...state.cartItems, action.payload];
     },
   },
 });

@@ -3,6 +3,6 @@
 // label may be USD, EUR, etc
 
 export default function getPrice(data, label) {
-  const price = data.prices.filter((price) => price.currency.label === label);
+  const price = data?.prices?.filter((price) => price.currency.label === label);
   return price;
 }

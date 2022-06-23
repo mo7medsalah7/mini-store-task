@@ -114,6 +114,13 @@ const PRODUCT_QUERY = gql`
           symbol
         }
       }
+      attributes {
+        items {
+          displayValue
+          value
+          id
+        }
+      }
     }
   }
 `;
