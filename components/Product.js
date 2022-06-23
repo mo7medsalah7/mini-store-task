@@ -34,7 +34,7 @@ const SingleProduct = styled.div`
   &:hover {
     box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
     -webkit-box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
-    button.cart-icon {
+    .cart-icon {
       display: flex;
     }
   }
@@ -58,21 +58,21 @@ const FigureContainer = styled.div`
   display: flex; */
   height: 90%;
   position: relative;
-  padding: 16px;
-  button.cart-icon {
-    all: unset;
-    position: absolute;
-    background-color: #5ece7b;
-    border-radius: 50%;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    right: 10%;
-    bottom: 0%;
-    cursor: pointer;
-    display: none;
-  }
+  padding: 16px; 
+`;
+const AddToCartSmallIcon = styled.button`
+  all: unset;
+  position: absolute;
+  cursor: ${(props) => (props.inStock ? 'pointer' : 'not-allowed')};
+  background-color: #5ece7b;
+  border-radius: 50%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  right: 10%;
+  bottom: 0%;
+  display: none;
 `;
 
 const ProductImage = styled.img`
@@ -163,9 +163,10 @@ function Product({ item }) {
                     </Overlay>
                   )}
 
-                  <button
+                  <AddToCartSmallIcon
                     className="cart-icon"
                     onClick={() => dispatch(addToCart(product))}
+                    inStock={product?.inStock}
                   >
                     <svg
                       width="24"
@@ -187,7 +188,7 @@ function Product({ item }) {
                         fill="white"
                       />
                     </svg>
-                  </button>
+                  </AddToCartSmallIcon>
                 </FigureContainer>
                 <ProductTitle inStock={product?.inStock}>
                   <Title

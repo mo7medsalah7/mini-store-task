@@ -9,8 +9,18 @@ const cartSlice = createSlice({
 
   reducers: {
     addToCart: (state, action) => {
-      state.cartCount += 1;
-      state.cartItems = [...state.cartItems, action.payload];
+      const isExist = state?.cartItems?.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (isExist) {
+        return {
+          ...state,
+        };
+      } else {
+        state.cartCount += 1;
+        state.cartItems = [...state.cartItems, action.payload];
+      }
     },
   },
 });

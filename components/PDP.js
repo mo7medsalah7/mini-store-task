@@ -108,9 +108,11 @@ const ProductPrice = styled.span`
 const AddToCartButton = styled.button`
   all: unset;
   background-color: #5ece7b;
+  background-color: ${(props) =>
+    props.inStock ? '#5ece7b' : 'rgba(94, 206, 123, 0.5)'};
   color: #fff;
   text-transform: uppercase;
-  cursor: pointer;
+  cursor: ${(props) => (props.inStock ? 'pointer' : 'not-allowed')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -127,8 +129,7 @@ const Description = styled.p`
 export default function PDP({ query }) {
   // Redux Toolkit Store for Cart
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state?.cart);
-  // console.log(cartItems);
+
   // Apollo useQuery
   const { loading, error, data } = useQuery(PRODUCT_QUERY, {
     variables: {
@@ -137,7 +138,8 @@ export default function PDP({ query }) {
   });
   // React useState to manage the bigger image
   const [imageUrl, setImageUrl] = React.useState({ url: '' });
-
+  const dreamData = { ...data };
+  console.log('dream', dreamData);
   useEffect(() => {
     if (!loading && data) {
       setImageUrl({ url: heroImage(data.product) });
@@ -155,7 +157,6 @@ export default function PDP({ query }) {
   }
 
   const price = getPrice(data?.product, 'USD');
-  console.log(data?.product?.attributes);
   return (
     <GridContainer>
       <Left>
@@ -190,7 +191,11 @@ export default function PDP({ query }) {
             </ProductPrice>
           ))}
         </PriceContainer>
-        <AddToCartButton onClick={() => dispatch(addToCart(data?.product))}>
+
+        <AddToCartButton
+          onClick={() => dispatch(addToCart(data?.product))}
+          inStock={data?.product.inStock}
+        >
           add to cart
         </AddToCartButton>
         <Description>{data?.product?.description}</Description>
