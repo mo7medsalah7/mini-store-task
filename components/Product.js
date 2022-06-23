@@ -53,12 +53,9 @@ const ProductPrice = styled.span`
 `;
 
 const FigureContainer = styled.div`
-  /* justify-content: center;
-  align-items: center;
-  display: flex; */
   height: 90%;
   position: relative;
-  padding: 16px; 
+  padding: 16px;
 `;
 const AddToCartSmallIcon = styled.button`
   all: unset;
@@ -151,6 +148,9 @@ function Product({ item }) {
           const { product } = data;
           // Filtering Price On Label 'USD'
           const price = getPrice(product, 'USD');
+          // adding Quantity property to the object
+          // object came from backend without Quantity
+          const dreamProduct = { ...product, qty: 1 };
 
           return (
             <Link href={`/product/${product.id}`}>
@@ -165,7 +165,7 @@ function Product({ item }) {
 
                   <AddToCartSmallIcon
                     className="cart-icon"
-                    onClick={() => dispatch(addToCart(product))}
+                    onClick={() => dispatch(addToCart(dreamProduct))}
                     inStock={product?.inStock}
                   >
                     <svg

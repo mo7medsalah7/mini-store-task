@@ -76,7 +76,14 @@ const Right = styled.div`
 `;
 
 export default function Header() {
-  const { cartCount, cartItems } = useSelector((state) => state?.cart);
+  const { cartItems } = useSelector((state) => state?.cart);
+  const cartQuantity = cartItems?.reduce((prev, current) => {
+    return prev + current.qty;
+  }, 0);
+  console.log('aaa', cartQuantity);
+
+  // const [showPortal, setShowPortal] = React.useState(false);
+
   return (
     <NavContainer>
       <Left>
@@ -169,7 +176,9 @@ export default function Header() {
               fill="#43464E"
             />
           </svg>
-          <span className="cart-count">{cartCount}</span>
+          {cartQuantity > 0 && (
+            <span className="cart-count">{cartQuantity}</span>
+          )}
         </button>
       </Right>
     </NavContainer>

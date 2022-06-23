@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import Title from './Title';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import getPrice from '../utils.js/get-price';
 import Attribute from './Attribute';
 import heroImage from '../utils.js/heroImage';
+import { addToCart, removeFromCart } from '../store/cartSlice';
 
 const CartItemsContainer = styled.div`
   display: flex;
@@ -62,44 +63,48 @@ const IncreaseDecrease = styled.div`
 
 function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
-
+  console.log(cartItems);
+  const dispatch = useDispatch();
   return (
     <div>
       <Title fontSize="32px" fontWeight="700" data="Cart" />
       <CartItemsContainer>
-        {cartItems?.map((item) => {
-          const price = getPrice(item, 'USD');
-          console.log('mo', item?.attributes);
-          return (
-            <CartItem>
-              <LeftSide>
-                <Title font-size="30px" fontWeight="600" data={item.name} />
+        {cartItems?.length > 0 &&
+          cartItems?.map((item) => {
+            const price = getPrice(item, 'USD');
+            return (
+              <CartItem>
+                <LeftSide>
+                  <Title font-size="30px" fontWeight="600" data={item.name} />
 
-                <PriceContainer>
-                  <ProductPrice>
-                    {price?.map((priceItem) => (
-                      <ProductPrice>
-                        {priceItem.currency.symbol}
-                        {priceItem.amount}
-                      </ProductPrice>
-                    ))}
-                  </ProductPrice>
-                </PriceContainer>
-                <Attribute
-                  attributes={item?.attributes?.find((element) => element)}
-                />
-              </LeftSide>
-              <RightSide>
-                <IncreaseDecrease>
-                  <button>+</button>
-                  <span>1</span>
-                  <button>-</button>
-                </IncreaseDecrease>
-                <img src={heroImage(item)} alt={item?.name} />
-              </RightSide>
-            </CartItem>
-          );
-        })}
+                  <PriceContainer>
+                    <ProductPrice>
+                      {price?.map((priceItem) => (
+                        <ProductPrice>
+                          {priceItem.currency.symbol}
+                          {priceItem.amount}
+                        </ProductPrice>
+                      ))}
+                    </ProductPrice>
+                  </PriceContainer>
+                  <Attribute
+                    attributes={item?.attributes?.find((element) => element)}
+                  />
+                </LeftSide>
+                <RightSide>
+                  <IncreaseDecrease>
+                    <button onClick={() => dispatch(addToCart(item))}>+</button>
+                    <span>{item.qty}</span>
+                    <button onClick={() => dispatch(removeFromCart(item))}>
+                      -
+                    </button>
+                  </IncreaseDecrease>
+                  <img src={heroImage(item)} alt={item?.name} />
+                </RightSide>
+              </CartItem>
+            );
+          })}
+        {cartItems?.length === 0 && <p>No Items Added To Cart</p>}
       </CartItemsContainer>
     </div>
   );

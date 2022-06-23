@@ -138,8 +138,7 @@ export default function PDP({ query }) {
   });
   // React useState to manage the bigger image
   const [imageUrl, setImageUrl] = React.useState({ url: '' });
-  const dreamData = { ...data };
-  console.log('dream', dreamData);
+
   useEffect(() => {
     if (!loading && data) {
       setImageUrl({ url: heroImage(data.product) });
@@ -157,6 +156,12 @@ export default function PDP({ query }) {
   }
 
   const price = getPrice(data?.product, 'USD');
+
+  // adding Quantity property to the object
+  // object came from backend without Quantity
+  const dreamProduct = { ...data?.product, qty: 1 };
+  console.log(dreamProduct);
+
   return (
     <GridContainer>
       <Left>
@@ -193,7 +198,7 @@ export default function PDP({ query }) {
         </PriceContainer>
 
         <AddToCartButton
-          onClick={() => dispatch(addToCart(data?.product))}
+          onClick={() => dispatch(addToCart(dreamProduct))}
           inStock={data?.product.inStock}
         >
           add to cart

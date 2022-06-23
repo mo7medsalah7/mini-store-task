@@ -16,14 +16,28 @@ const cartSlice = createSlice({
       if (isExist) {
         return {
           ...state,
+          cartItems: state?.cartItems?.map((item) =>
+            item.id === action.payload.id
+              ? { ...item, qty: item.qty + 1 }
+              : item
+          ),
         };
       } else {
-        state.cartCount += 1;
-        state.cartItems = [...state.cartItems, action.payload];
+        state.cartItems = [...state?.cartItems, action.payload];
       }
+    },
+    removeFromCart: (state, action) => {
+      const nextCartItems = (state.cartItems = state.cartItems.filter(
+        (cartItem) =>
+          cartItem.qty === 1
+            ? cartItem.id !== action.payload.id
+            : cartItem.qty--
+      ));
+
+      state.cartItems = nextCartItems;
     },
   },
 });
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
