@@ -54,7 +54,7 @@ const Right = styled.div`
   flex: 1;
   display: flex;
   justify-content: end;
-  align-items: center;
+  align-items: baseline;
   position: relative;
   gap: 1.4rem;
 `;

@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 2rem;
-  justify-content: space-around;
+  gap: 1rem;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 `;
 
 const AttributeButton = styled.div`

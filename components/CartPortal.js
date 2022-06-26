@@ -157,6 +157,7 @@ function CartPortal({ cartQuantity }) {
     router.push('/cart');
   }
 
+  // get Total Price
   const handleGetTotals = () => {
     dispatch(getTotals());
   };
