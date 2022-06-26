@@ -8,11 +8,12 @@ import heroImage from '../utils.js/heroImage';
 import Title from './Title';
 import getPrice from '../utils.js/get-price';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import Attribute from './Attribute';
 import Button from './Button';
 
+// Writing a Query to fetch the product
 const PRODUCT_QUERY = gql`
   query PRODUCT_QUERY($id: String!) {
     product(id: $id) {
@@ -39,6 +40,7 @@ const PRODUCT_QUERY = gql`
   }
 `;
 
+// CSS-in-JS
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 0.5fr repeat(2, 1fr);
@@ -113,7 +115,6 @@ const Description = styled.p`
 `;
 
 export default function PDP({ query }) {
-  // Redux Toolkit Store for Cart
   const dispatch = useDispatch();
 
   // Apollo useQuery
@@ -153,47 +154,49 @@ export default function PDP({ query }) {
   }
 
   return (
-    <GridContainer>
-      <Left>
-        {data?.product?.gallery
-          .map((url) => (
-            <img key={url} src={url} onClick={() => handleChangeImage(url)} />
-          ))
-          .slice(0, 3)}
-      </Left>
-      <HeroImage>
-        <img src={imageUrl.url} alt={data?.product?.name} />
-      </HeroImage>
-      <Details>
-        <Title
-          fontSize="30px"
-          fontWeight="600"
-          lineHeight="27"
-          data={data?.product?.name}
-        />
-        <p>Running Short</p>
-        <SizeContainer>
-          <h3>SIZE</h3>
-          <Attribute attributes={data?.product?.attributes[0]} />
-        </SizeContainer>
-        <PriceContainer>
-          <h3>PRICE</h3>
+    <>
+      <GridContainer>
+        <Left>
+          {data?.product?.gallery
+            .map((url) => (
+              <img key={url} src={url} onClick={() => handleChangeImage(url)} />
+            ))
+            .slice(0, 3)}
+        </Left>
+        <HeroImage>
+          <img src={imageUrl.url} alt={data?.product?.name} />
+        </HeroImage>
+        <Details>
+          <Title
+            fontSize="30px"
+            fontWeight="600"
+            lineHeight="27"
+            data={data?.product?.name}
+          />
+          <p>Running Short</p>
+          <SizeContainer>
+            <h3>SIZE</h3>
+            <Attribute attributes={data?.product?.attributes[0]} />
+          </SizeContainer>
+          <PriceContainer>
+            <h3>PRICE</h3>
 
-          {price.map((item) => (
-            <ProductPrice key={item.amount}>
-              {item.currency.symbol}
-              {item.amount}
-            </ProductPrice>
-          ))}
-        </PriceContainer>
+            {price.map((item) => (
+              <ProductPrice key={item.amount}>
+                {item.currency.symbol}
+                {item.amount}
+              </ProductPrice>
+            ))}
+          </PriceContainer>
 
-        <Button
-          handleClick={() => handleAddToCart(dreamProduct)}
-          inStock={data?.product.inStock}
-          data="Add To Cart"
-        ></Button>
-        <Description>{data?.product?.description}</Description>
-      </Details>
-    </GridContainer>
+          <Button
+            handleClick={() => handleAddToCart(dreamProduct)}
+            inStock={data?.product.inStock}
+            data="Add To Cart"
+          ></Button>
+          <Description>{data?.product?.description}</Description>
+        </Details>
+      </GridContainer>
+    </>
   );
 }

@@ -8,6 +8,7 @@ import Attribute from './Attribute';
 import { addToCart, getTotals, removeFromCart } from '../store/cartSlice';
 import Button from './Button';
 import Link from 'next/link';
+import DropDownMenu from './DropDownMenu';
 
 const Portal = styled.div`
   position: relative;
@@ -32,17 +33,6 @@ const Portal = styled.div`
     top: -11px;
     right: -15px;
   }
-`;
-
-const PortalCard = styled.div`
-  position: absolute;
-  top: 5rem;
-  right: 0rem;
-  background-color: #fff;
-  padding: 1rem 1.5rem;
-  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
-  -webkit-box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
-  overflow-x: hidden;
 `;
 
 const PortalCardHead = styled.div`
@@ -152,6 +142,7 @@ function CartPortal({ cartQuantity }) {
   const { cartItems, cartTotalAmount } = cart;
   const dispatch = useDispatch();
 
+  // Toggling cart items in navbar
   function toggleCart() {
     setShowPortal(!showPortal);
   }
@@ -186,7 +177,7 @@ function CartPortal({ cartQuantity }) {
         {cartQuantity > 0 && <span className="cart-count">{cartQuantity}</span>}
       </button>
       {showPortal && (
-        <PortalCard>
+        <DropDownMenu>
           <PortalCardHead>
             <Title fontSize="18px" fontWeight="700" data="My Bag" />
             <span>{cartQuantity} Items</span>
@@ -260,7 +251,7 @@ function CartPortal({ cartQuantity }) {
               </CartButtons>
             </CartItemsContainer>
           </PortalCardContent>
-        </PortalCard>
+        </DropDownMenu>
       )}
     </Portal>
   );

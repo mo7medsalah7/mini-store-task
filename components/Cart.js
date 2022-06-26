@@ -6,6 +6,7 @@ import getPrice from '../utils.js/get-price';
 import Attribute from './Attribute';
 import heroImage from '../utils.js/heroImage';
 import { addToCart, removeFromCart } from '../store/cartSlice';
+import Head from 'next/head';
 
 const CartItemsContainer = styled.div`
   display: flex;
