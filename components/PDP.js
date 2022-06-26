@@ -146,7 +146,6 @@ export default function PDP({ query }) {
   // adding Quantity property to the object
   // object came from backend without Quantity
   const dreamProduct = { ...data?.product, qty: 1 };
-  console.log(dreamProduct);
 
   function handleAddToCart(data) {
     // e.preventdefault();
@@ -158,7 +157,7 @@ export default function PDP({ query }) {
       <Left>
         {data?.product?.gallery
           .map((url) => (
-            <img src={url} onClick={() => handleChangeImage(url)} />
+            <img key={url} src={url} onClick={() => handleChangeImage(url)} />
           ))
           .slice(0, 3)}
       </Left>
@@ -181,7 +180,7 @@ export default function PDP({ query }) {
           <h3>PRICE</h3>
 
           {price.map((item) => (
-            <ProductPrice>
+            <ProductPrice key={item.amount}>
               {item.currency.symbol}
               {item.amount}
             </ProductPrice>

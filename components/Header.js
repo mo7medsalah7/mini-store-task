@@ -60,10 +60,8 @@ const Right = styled.div`
 export default function Header() {
   const { cartItems } = useSelector((state) => state?.cart);
   const cartQuantity = cartItems?.reduce((prev, current) => {
-    return prev + current.qty;
+    return prev + current?.qty;
   }, 0);
-  console.log('aaa', cartQuantity);
-
 
   return (
     <NavContainer>

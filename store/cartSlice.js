@@ -4,6 +4,7 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState: {
     cartItems: [],
+    totalPrice: 0,
     cartCount: 0,
   },
 
@@ -27,14 +28,18 @@ const cartSlice = createSlice({
       }
     },
     removeFromCart: (state, action) => {
-      const nextCartItems = (state.cartItems = state.cartItems.filter(
-        (cartItem) =>
-          cartItem.qty === 1
-            ? cartItem.id !== action.payload.id
-            : cartItem.qty--
-      ));
-
-      state.cartItems = nextCartItems;
+      const itemIndex = state.cartItems?.findIndex(
+        (cartItem) => cartItem.id === action.payload.id
+      );
+      console.log(itemIndex);
+      if (state.cartItems[itemIndex].qty > 1) {
+        state.cartItems[itemIndex].qty -= 1;
+      } else if (state.cartItems[itemIndex].qty === 1) {
+        const nextCartItems = (state.cartItems = state.cartItems.filter(
+          (cartItem) => cartItem.id !== action.payload.id
+        ));
+        state.cartItems = nextCartItems;
+      }
     },
   },
 });

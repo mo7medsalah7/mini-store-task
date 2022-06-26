@@ -24,7 +24,7 @@ function Attribute({ attributes }) {
   return (
     <ButtonContainer>
       {attributes?.items?.map((item) => {
-        return <AttributeButton>{item.value}</AttributeButton>;
+        return <AttributeButton key={item.value}>{item.value}</AttributeButton>;
       })}
     </ButtonContainer>
   );

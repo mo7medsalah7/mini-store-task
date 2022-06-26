@@ -148,13 +148,14 @@ const CartButtons = styled.div`
 function CartPortal({ cartQuantity }) {
   const [showPortal, setShowPortal] = React.useState(false);
 
-  const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems);
+  const { cartItems, totalPrice } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   function toggleCart() {
     setShowPortal(!showPortal);
   }
+
+  // console.log(totalPrice);
 
   return (
     <Portal>
@@ -193,7 +194,7 @@ function CartPortal({ cartQuantity }) {
                 cartItems?.map((item) => {
                   const price = getPrice(item, 'USD');
                   return (
-                    <CartItem>
+                    <CartItem key={item.id}>
                       <LeftSide>
                         <Title
                           font-size="30px"
@@ -239,7 +240,7 @@ function CartPortal({ cartQuantity }) {
               <TotalPrice>
                 <span>Total</span>
                 <div>
-                  <p>$5000</p>
+                  <p>$0</p>
                 </div>
               </TotalPrice>
               <CartButtons>

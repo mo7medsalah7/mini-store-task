@@ -73,7 +73,7 @@ function Cart() {
           cartItems?.map((item) => {
             const price = getPrice(item, 'USD');
             return (
-              <CartItem>
+              <CartItem key={item.id}>
                 <LeftSide>
                   <Title font-size="30px" fontWeight="600" data={item.name} />
 
