@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import getPrice from '../utils.js/get-price';
-
+import { usePrice } from '../utils.js/priceState';
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -46,8 +45,18 @@ const cartSlice = createSlice({
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {
           const { qty } = cartItem;
-          console.log(cartItem);
-          const priceToGet = getPrice(cartItem, 'USD');
+
+          //  HERE, I re-defined getPrice function, Hooks can only be called
+          //  inside of the body of a function component.
+
+          function getPrice(data, label = 'USD') {
+            const price = data?.prices?.filter(
+              (price) => price.currency.label === label
+            );
+            return price;
+          }
+
+          const priceToGet = getPrice(cartItem);
           const price = priceToGet.map((item) => item.amount);
           const itemTotal = price * qty;
 

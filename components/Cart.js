@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import Title from './Title';
 import { useDispatch, useSelector } from 'react-redux';
-import getPrice from '../utils.js/get-price';
 import Attribute from './Attribute';
 import heroImage from '../utils.js/heroImage';
 import { addToCart, removeFromCart } from '../store/cartSlice';
-import Head from 'next/head';
+import { usePrice } from '../utils.js/priceState';
 
 const CartItemsContainer = styled.div`
   display: flex;
@@ -64,7 +63,8 @@ const IncreaseDecrease = styled.div`
 
 function Cart() {
   const { cartItems } = useSelector((state) => state.cart);
-  console.log(cartItems);
+
+  const { getPrice } = usePrice();
   const dispatch = useDispatch();
   return (
     <div>
@@ -72,7 +72,7 @@ function Cart() {
       <CartItemsContainer>
         {cartItems?.length > 0 &&
           cartItems?.map((item) => {
-            const price = getPrice(item, 'USD');
+            const price = getPrice(item);
             return (
               <CartItem key={item.id}>
                 <LeftSide>

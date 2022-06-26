@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import Link from 'next/link';
 import heroImage from '../utils.js/heroImage';
 import Title from './Title';
-import getPrice from '../utils.js/get-price';
+import { usePrice } from '../utils.js/priceState';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 
@@ -60,6 +60,7 @@ const FigureContainer = styled.div`
 const AddToCartSmallIcon = styled.button`
   all: unset;
   position: absolute;
+
   cursor: ${(props) => (props.inStock ? 'pointer' : 'not-allowed')};
   background-color: #5ece7b;
   border-radius: 50%;
@@ -96,6 +97,7 @@ const Overlay = styled.div`
   }
 `;
 
+// Writing a Query to get specific product on id
 const PRODUCT_QUERY = gql`
   query PRODUCT_QUERY($id: String!) {
     product(id: $id) {
@@ -124,7 +126,8 @@ const PRODUCT_QUERY = gql`
 
 function Product({ item }) {
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state?.cart);
+  const { getPrice } = usePrice();
+
   return (
     <>
       <CategoryTitle>
@@ -147,7 +150,7 @@ function Product({ item }) {
           // Grab Product
           const { product } = data;
           // Filtering Price On Label 'USD'
-          const price = getPrice(product, 'USD');
+          const price = getPrice(product);
           // adding Quantity property to the object
           // object came from backend without Quantity
           const dreamProduct = { ...product, qty: 1 };
@@ -199,7 +202,7 @@ function Product({ item }) {
                   />
                 </ProductTitle>
                 {price.map((item) => (
-                  <ProductPrice inStock={product?.inStock}>
+                  <ProductPrice key={price.amount} inStock={product?.inStock}>
                     {item.currency.symbol}
                     {item.amount}
                   </ProductPrice>

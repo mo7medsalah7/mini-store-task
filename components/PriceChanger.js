@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
 import React from 'react';
 import styled from 'styled-components';
+import { usePrice } from '../utils.js/priceState';
 import DropDownMenu from './DropDownMenu';
 
 const PriceChangerContainer = styled.div`
@@ -24,6 +25,10 @@ const CurrencyInfo = styled.div`
   padding: 1rem;
   font-size: 18px;
   font-weight: 500;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
 `;
 
 // Writing a Query to get currencies
@@ -38,20 +43,24 @@ const CURRENCY_QUERY = gql`
 
 function PriceChanger() {
   const [showDropdownMenu, setShowDropdownMenu] = React.useState(false);
-
+  const { changeLabel } = usePrice();
   //Show/ Hide Dropdown
   function togglePriceDropDown() {
     setShowDropdownMenu(!showDropdownMenu);
   }
 
+  async function handleChangeLabel(currency) {
+    await changeLabel(currency);
+    await setShowDropdownMenu(!showDropdownMenu);
+  }
+
   // Apollo useQuery
   const { loading, error, data } = useQuery(CURRENCY_QUERY);
-  console.log(data);
 
   return (
     <PriceChangerContainer>
       <ButtonsContainer onClick={togglePriceDropDown}>
-        {/* Dollar Sign Button  */}
+        {/* Currency Symbol Button  */}
         <button>
           <svg
             width="32"
@@ -103,10 +112,13 @@ function PriceChanger() {
           </button>
         )}
       </ButtonsContainer>
-      {!showDropdownMenu && (
-        <DropDownMenu>
+      {showDropdownMenu && (
+        <DropDownMenu type="false">
           {data?.currencies?.map((currency) => (
-            <CurrencyInfo key={currency.symbol}>
+            <CurrencyInfo
+              key={currency.symbol}
+              onClick={() => handleChangeLabel(currency)}
+            >
               <span>{currency.symbol}</span>
               <p>{currency.label}</p>
             </CurrencyInfo>

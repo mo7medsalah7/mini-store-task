@@ -2,13 +2,14 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Title from './Title';
-import getPrice from '../utils.js/get-price';
+import { usePrice } from '../utils.js/priceState';
 import heroImage from '../utils.js/heroImage';
 import Attribute from './Attribute';
 import { addToCart, getTotals, removeFromCart } from '../store/cartSlice';
 import Button from './Button';
 import Link from 'next/link';
 import DropDownMenu from './DropDownMenu';
+import { useRouter } from 'next/router';
 
 const Portal = styled.div`
   position: relative;
@@ -141,14 +142,27 @@ function CartPortal({ cartQuantity }) {
   const cart = useSelector((state) => state.cart);
   const { cartItems, cartTotalAmount } = cart;
   const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { getPrice } = usePrice();
 
   // Toggling cart items in navbar
   function toggleCart() {
     setShowPortal(!showPortal);
   }
 
-  React.useEffect(() => {
+  // Handling route to cart page
+  function handleClick() {
+    setShowPortal(!showPortal);
+    router.push('/cart');
+  }
+
+  const handleGetTotals = () => {
     dispatch(getTotals());
+  };
+
+  React.useEffect(() => {
+    handleGetTotals();
   }, [cart, dispatch]);
 
   return (
@@ -177,7 +191,7 @@ function CartPortal({ cartQuantity }) {
         {cartQuantity > 0 && <span className="cart-count">{cartQuantity}</span>}
       </button>
       {showPortal && (
-        <DropDownMenu>
+        <DropDownMenu type="cartItems">
           <PortalCardHead>
             <Title fontSize="18px" fontWeight="700" data="My Bag" />
             <span>{cartQuantity} Items</span>
@@ -186,7 +200,7 @@ function CartPortal({ cartQuantity }) {
             <CartItemsContainer>
               {cartItems?.length > 0 &&
                 cartItems?.map((item) => {
-                  const price = getPrice(item, 'USD');
+                  const price = getPrice(item);
                   return (
                     <CartItem key={item.id}>
                       <LeftSide>
@@ -239,12 +253,12 @@ function CartPortal({ cartQuantity }) {
               </TotalPrice>
               <CartButtons>
                 <Link href="/cart">
-                  <a href="/cart" className="basic-btn">
+                  <a onClick={handleClick} className="basic-btn">
                     <Button data="View Bag" inStock />
                   </a>
                 </Link>
                 <Link href="/cart">
-                  <a href="/cart" className="green-btn">
+                  <a className="green-btn" onClick={handleClick}>
                     <Button data="Checkout" inStock />
                   </a>
                 </Link>

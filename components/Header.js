@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import CartPortal from './CartPortal';
 import PriceChanger from './PriceChanger';
 
-
 const NavContainer = styled.nav`
   padding: 1.5rem 4rem;
   display: flex;
@@ -55,7 +54,7 @@ const Right = styled.div`
   flex: 1;
   display: flex;
   justify-content: end;
-  align-items: baseline;
+  align-items: center;
   position: relative;
   gap: 1.4rem;
 `;

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const DropDownCard = styled.div`
   position: absolute;
+  min-width: ${(props) => (props.type === 'cartItems' ? '500px' : '200px')};
   top: 5rem;
   right: 0rem;
   background-color: #fff;
@@ -12,8 +13,8 @@ const DropDownCard = styled.div`
   overflow-x: hidden;
 `;
 
-function DropDownMenu(props) {
-  return <DropDownCard>{props.children}</DropDownCard>;
+function DropDownMenu({ type, children }) {
+  return <DropDownCard type={type}>{children}</DropDownCard>;
 }
 
 export default DropDownMenu;

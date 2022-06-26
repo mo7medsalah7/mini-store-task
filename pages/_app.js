@@ -4,6 +4,8 @@ import Page from '../components/Page';
 import { store, persistor } from '../store/index';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { PriceStateProvider } from '../utils.js/priceState';
+import React from 'react';
 
 const apollo = new ApolloClient({
   uri: 'http://localhost:4000/',
@@ -15,9 +17,11 @@ function MyApp({ Component, pageProps }) {
     <ApolloProvider client={apollo}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <Page>
-            <Component {...pageProps} />
-          </Page>
+          <PriceStateProvider>
+            <Page>
+              <Component {...pageProps} />
+            </Page>
+          </PriceStateProvider>
         </PersistGate>
       </Provider>
     </ApolloProvider>

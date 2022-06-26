@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
-import Image from 'next/image';
 import { useQuery } from '@apollo/client';
-import Link from 'next/link';
 import heroImage from '../utils.js/heroImage';
 import Title from './Title';
-import getPrice from '../utils.js/get-price';
+import { usePrice } from '../utils.js/priceState';
 
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
@@ -116,6 +114,7 @@ const Description = styled.p`
 
 export default function PDP({ query }) {
   const dispatch = useDispatch();
+  const { getPrice } = usePrice();
 
   // Apollo useQuery
   const { loading, error, data } = useQuery(PRODUCT_QUERY, {
@@ -142,7 +141,7 @@ export default function PDP({ query }) {
     setImageUrl({ url });
   }
 
-  const price = getPrice(data?.product, 'USD');
+  const price = getPrice(data?.product);
 
   // adding Quantity property to the object
   // object came from backend without Quantity
