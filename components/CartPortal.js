@@ -5,7 +5,7 @@ import Title from './Title';
 import getPrice from '../utils.js/get-price';
 import heroImage from '../utils.js/heroImage';
 import Attribute from './Attribute';
-import { addToCart, removeFromCart } from '../store/cartSlice';
+import { addToCart, getTotals, removeFromCart } from '../store/cartSlice';
 import Button from './Button';
 import Link from 'next/link';
 
@@ -148,14 +148,17 @@ const CartButtons = styled.div`
 function CartPortal({ cartQuantity }) {
   const [showPortal, setShowPortal] = React.useState(false);
 
-  const { cartItems, totalPrice } = useSelector((state) => state.cart);
+  const cart = useSelector((state) => state.cart);
+  const { cartItems, cartTotalAmount } = cart;
   const dispatch = useDispatch();
 
   function toggleCart() {
     setShowPortal(!showPortal);
   }
 
-  // console.log(totalPrice);
+  React.useEffect(() => {
+    dispatch(getTotals());
+  }, [cart, dispatch]);
 
   return (
     <Portal>
@@ -205,7 +208,7 @@ function CartPortal({ cartQuantity }) {
                         <PriceContainer>
                           <ProductPrice>
                             {price?.map((priceItem) => (
-                              <ProductPrice>
+                              <ProductPrice key={priceItem.amount}>
                                 {priceItem.currency.symbol}
                                 {priceItem.amount}
                               </ProductPrice>
@@ -240,7 +243,7 @@ function CartPortal({ cartQuantity }) {
               <TotalPrice>
                 <span>Total</span>
                 <div>
-                  <p>$0</p>
+                  <p>${cartTotalAmount}</p>
                 </div>
               </TotalPrice>
               <CartButtons>
