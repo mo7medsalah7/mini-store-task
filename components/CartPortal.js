@@ -67,7 +67,9 @@ const CartItem = styled.div`
     font-size: 18px;
   }
 `;
-const LeftSide = styled.div``;
+const LeftSide = styled.div`
+  width: 100%;
+`;
 const RightSide = styled.div`
   display: flex;
   justify-content: end;
@@ -88,6 +90,10 @@ const PriceContainer = styled.div`
 const ProductPrice = styled.span`
   font-weight: 500;
   font-size: 18px;
+
+  @media screen and (max-width: 766px) {
+    font-size: 16px;
+  }
 `;
 
 const IncreaseDecrease = styled.div`
@@ -138,6 +144,7 @@ const CartButtons = styled.div`
 
 function CartPortal({ cartQuantity }) {
   const [showPortal, setShowPortal] = React.useState(false);
+  const [showCartOverlay, setShowCartOverlay] = React.useState(false);
 
   const cart = useSelector((state) => state.cart);
   const { cartItems, cartTotalAmount } = cart;
@@ -149,12 +156,24 @@ function CartPortal({ cartQuantity }) {
   // Toggling cart items in navbar
   function toggleCart() {
     setShowPortal(!showPortal);
+    setShowCartOverlay(!showCartOverlay);
+    showCartOverlay
+      ? (document.getElementById('__next').style.background =
+          'rgba(0, 0, 0, 0)')
+      : (document.getElementById('__next').style.background =
+          'rgba(0, 0, 0, 0.5)');
   }
 
   // Handling route to cart page
-  function handleClick() {
-    setShowPortal(!showPortal);
-    router.push('/cart');
+  async function handleClick() {
+    await setShowPortal(!showPortal);
+    await setShowCartOverlay(!showCartOverlay);
+    showCartOverlay
+      ? (document.getElementById('__next').style.background =
+          'rgba(0, 0, 0, 0)')
+      : (document.getElementById('__next').style.background =
+          'rgba(0, 0, 0, 0.5)');
+    await router.push('/cart');
   }
 
   // get Total Price

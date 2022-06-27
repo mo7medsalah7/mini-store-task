@@ -45,6 +45,10 @@ const InnerStyles = styled.div`
   max-width: var(--maxWidth);
   margin: 0 auto;
   padding: 2rem 0rem;
+
+  @media screen and (max-width: 766px) {
+    padding: 1rem 2rem;
+  }
 `;
 
 export default function Page({ children }) {

@@ -12,6 +12,12 @@ const DropDownCard = styled.div`
   box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
   -webkit-box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
   overflow-x: hidden;
+
+  @media screen and (max-width: 766px) {
+    min-width: ${(props) => (props.type === 'cartItems' ? '450px' : '200px')};
+
+    max-width: 500px;
+  }
 `;
 
 function DropDownMenu({ type, children }) {

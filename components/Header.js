@@ -10,14 +10,22 @@ const NavContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 766px) {
+    padding: 1.5rem 2rem;
+  }
 `;
 const Left = styled.ul`
+  padding: 0;
   flex: 1;
   list-style: none;
   display: flex;
   align-items: center;
   text-align: center;
   gap: 2rem;
+  @media screen and (max-width: 766px) {
+    gap: 1rem;
+  }
   a {
     all: unset;
     cursor: pointer;
@@ -31,6 +39,10 @@ const Left = styled.ul`
     text-transform: uppercase;
     text-decoration: none;
     position: relative;
+
+    @media screen and (max-width: 766px) {
+      font-size: 16px;
+    }
 
     &::after {
       content: '';
@@ -69,11 +81,13 @@ export default function Header() {
 
   return (
     <NavContainer>
+      {/* Left Routing  */}
       <Left>
         <Link href="/products/all">All</Link>
         <Link href="/products/clothes">Clothes</Link>
         <Link href="/products/tech">Tech</Link>
       </Left>
+      {/* Logo  */}
       <Logo>
         <svg
           width="41"
@@ -123,6 +137,7 @@ export default function Header() {
           </defs>
         </svg>
       </Logo>
+      {/* Right Section For CurrencyChanger and Cart Overlay   */}
       <Right>
         <PriceChanger />
 

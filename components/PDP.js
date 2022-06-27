@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gql from 'graphql-tag';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../store/cartSlice';
 import Attribute from './Attribute';
 import Button from './Button';
+import { parseDescription } from '../utils.js/descriptionParsed';
 
 // Writing a Query to fetch the product
 const PRODUCT_QUERY = gql`
@@ -59,7 +60,7 @@ const Left = styled.div`
   }
 `;
 const HeroImage = styled.div`
-  grid-area: 1 / 2 / 2 / 3;
+  grid-area: 1 / 2 / 2 / 2;
   height: 80vh;
   img {
     height: 100%;
@@ -148,9 +149,13 @@ export default function PDP({ query }) {
   const dreamProduct = { ...data?.product, qty: 1 };
 
   function handleAddToCart(data) {
-    // e.preventdefault();
     dispatch(addToCart(data));
   }
+
+  // The description provided in HTML format should be parsed
+  // and presented as HTML, not as plain text
+
+  const description = parseDescription(data);
 
   return (
     <>
@@ -193,7 +198,7 @@ export default function PDP({ query }) {
             inStock={data?.product.inStock}
             data="Add To Cart"
           ></Button>
-          <Description>{data?.product?.description}</Description>
+          <Description>{description}</Description>
         </Details>
       </GridContainer>
     </>
