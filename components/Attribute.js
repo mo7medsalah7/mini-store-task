@@ -15,8 +15,8 @@ const AttributeButton = styled.div`
   border: 1px solid #1d1f22;
   font-size: 16px;
   font-weight: 400;
-  background-color: ${(props) => (props.isClicked ? '#1d1f22' : ' #fff')};
-  color: ${(props) => (props.isClicked ? '#fff' : ' #1d1f22')};
+  background: #fff;
+  color: #1d1f22;
 
   &:hover {
     background-color: #1d1f22;
@@ -31,22 +31,21 @@ const AttributeButton = styled.div`
 function Attribute({ attributes }) {
   const [isClicked, setIsClicked] = React.useState(false);
   const router = useRouter();
-
   // For products that have various options (attributes) - the options should be selected.
-  function handleClickAttribute(attributeValue) {
-    // setIsClicked(!isClicked);
+  const handleClickAttribute = (e, attributeValue) => {
+    setIsClicked((isClicked) => !isClicked);
     if (router.pathname === `/product/[id]`) {
       router.push({
         pathname: `/product/${router?.query?.id}`,
-        query: { size: `${attributeValue}` },
+        query: { q: `${attributeValue}` },
       });
     } else if (router.pathname === `/cart`) {
       router.push({
         pathname: `/cart`,
-        query: { size: `${attributeValue}` },
+        query: { q: `${attributeValue}` },
       });
     }
-  }
+  };
 
   return (
     <ButtonContainer>
@@ -54,7 +53,9 @@ function Attribute({ attributes }) {
         return (
           <AttributeButton
             key={item.id}
-            onClick={() => handleClickAttribute(item.value)}
+            onClick={(e) => handleClickAttribute(e, item.value)}
+            isClicked={isClicked}
+            id={item.id}
           >
             {item.value}
           </AttributeButton>

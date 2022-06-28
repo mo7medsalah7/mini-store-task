@@ -43,6 +43,10 @@ const GlobalStyles = createGlobalStyle`
   .active {
     border-bottom: 1px solid #53da7c;
   }
+  .clicked {
+    background-color: #1d1f22 !important;
+    color: #fff;
+  }
 `;
 
 const InnerStyles = styled.div`
