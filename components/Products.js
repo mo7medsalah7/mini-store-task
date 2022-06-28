@@ -29,8 +29,8 @@ function Products({ query }) {
     (category) => category.name === query?.category
   );
   return currentCategory.map((item) => (
-    <CategoriesContainer>
-      <Product key={item.id} item={item} />
+    <CategoriesContainer key={item.id}>
+      <Product item={item} key={item.id} />
     </CategoriesContainer>
   ));
 }

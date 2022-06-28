@@ -183,7 +183,7 @@ function CartPortal({ cartQuantity }) {
 
   React.useEffect(() => {
     handleGetTotals();
-  }, [cart, dispatch]);
+  }, [cart, dispatch, handleGetTotals]);
 
   return (
     <Portal>

@@ -156,8 +156,8 @@ function Product({ item }) {
           const dreamProduct = { ...product, qty: 1 };
 
           return (
-            <Link href={`/product/${product.id}`}>
-              <SingleProduct key={product.id}>
+            <Link href={`/product/${product.id}`} key={product.id}>
+              <SingleProduct>
                 <FigureContainer>
                   <ProductImage src={heroImage(product)} alt="product image" />
                   {!product.inStock && (

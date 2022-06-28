@@ -81,7 +81,7 @@ function Cart() {
                   <PriceContainer>
                     <ProductPrice>
                       {price?.map((priceItem) => (
-                        <ProductPrice>
+                        <ProductPrice key={priceItem.currency.symbol}>
                           {priceItem.currency.symbol}
                           {priceItem.amount}
                         </ProductPrice>

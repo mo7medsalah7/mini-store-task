@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Router from 'next/router';
 
-function index() {
+function Main() {
   useEffect(() => {
     const { pathname } = Router;
     if (pathname === '/') {
@@ -11,4 +11,4 @@ function index() {
   return <div>index</div>;
 }
 
-export default index;
+export default Main;
