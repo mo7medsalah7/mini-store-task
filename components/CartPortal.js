@@ -153,6 +153,15 @@ function CartPortal({ cartQuantity }) {
 
   const { getPrice } = usePrice();
 
+  // get Total Price
+  const handleGetTotals = () => {
+    dispatch(getTotals());
+  };
+
+  React.useEffect(() => {
+    handleGetTotals();
+  }, [cart, dispatch]);
+
   // Toggling cart items in navbar
   function toggleCart() {
     setShowPortal(!showPortal);
@@ -175,15 +184,6 @@ function CartPortal({ cartQuantity }) {
           'rgba(0, 0, 0, 0.5)');
     await router.push('/cart');
   }
-
-  // get Total Price
-  const handleGetTotals = () => {
-    dispatch(getTotals());
-  };
-
-  React.useEffect(() => {
-    handleGetTotals();
-  }, [cart, dispatch, handleGetTotals]);
 
   return (
     <Portal>

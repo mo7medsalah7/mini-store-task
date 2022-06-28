@@ -5,6 +5,6 @@ export function parseDescription(data) {
   const htmlDoc = new DOMParser().parseFromString(el, 'text/html');
 
   const descriptionWithoutTagName = htmlDoc.body.textContent;
-  console.log(descriptionWithoutTagName);
+
   return descriptionWithoutTagName;
 }

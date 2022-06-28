@@ -124,7 +124,7 @@ const PRODUCT_QUERY = gql`
   }
 `;
 
-function Product({ item }) {
+function Product({ item, products }) {
   const dispatch = useDispatch();
   const { getPrice } = usePrice();
 
@@ -134,21 +134,7 @@ function Product({ item }) {
         <h2>{item.name}</h2>
       </CategoryTitle>
       <ProductsContainer>
-        {item?.products?.map((item) => {
-          // Getting products of specific category
-
-          const { loading, error, data } = useQuery(PRODUCT_QUERY, {
-            variables: {
-              id: item.id,
-            },
-          });
-          // Loading
-          if (loading) return <p>Loading ....</p>;
-          // Handling Error
-          if (error) return <p>Error: {error.message} ....</p>;
-
-          // Grab Product
-          const { product } = data;
+        {products?.map((product) => {
           // Filtering Price On Label 'USD'
           const price = getPrice(product);
           // adding Quantity property to the object
@@ -198,7 +184,7 @@ function Product({ item }) {
                     fontSize="18px"
                     fontWeight="400"
                     lineHeight="30"
-                    data={data?.product?.name}
+                    data={product?.name}
                   />
                 </ProductTitle>
                 {price.map((item) => (

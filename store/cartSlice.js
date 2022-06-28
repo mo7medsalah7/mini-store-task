@@ -23,7 +23,7 @@ const cartSlice = createSlice({
               : item
           ),
         };
-      } else if (action.payload.isStock === true) {
+      } else if (action.payload?.inStock === true) {
         state.cartItems = [...state?.cartItems, action.payload];
       }
     },

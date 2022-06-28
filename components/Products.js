@@ -14,6 +14,24 @@ const ALL_CATEGORTY_PRODUCTS_QUERY = gql`
       name
       products {
         id
+        name
+        description
+        inStock
+        gallery
+        prices {
+          amount
+          currency {
+            label
+            symbol
+          }
+        }
+        attributes {
+          items {
+            displayValue
+            value
+            id
+          }
+        }
       }
     }
   }
@@ -28,9 +46,10 @@ function Products({ query }) {
   const currentCategory = categories.filter(
     (category) => category.name === query?.category
   );
+
   return currentCategory.map((item) => (
     <CategoriesContainer key={item.id}>
-      <Product item={item} key={item.id} />
+      <Product item={item} key={item.id} products={item.products} />
     </CategoriesContainer>
   ));
 }
