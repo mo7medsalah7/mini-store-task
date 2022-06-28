@@ -39,6 +39,10 @@ const GlobalStyles = createGlobalStyle`
     all: unset;
     cursor: pointer;
   }
+
+  .active {
+    border-bottom: 1px solid #53da7c;
+  }
 `;
 
 const InnerStyles = styled.div`
@@ -46,7 +50,7 @@ const InnerStyles = styled.div`
   margin: 0 auto;
   padding: 2rem 0rem;
 
-  @media screen and (max-width: 766px) {
+  @media screen and (max-width: 922px) {
     padding: 1rem 2rem;
   }
 `;

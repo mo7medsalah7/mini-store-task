@@ -30,7 +30,7 @@ function Products({ query }) {
   );
   return currentCategory.map((item) => (
     <CategoriesContainer>
-      <Product key={item.name} item={item} />
+      <Product key={item.id} item={item} />
     </CategoriesContainer>
   ));
 }
