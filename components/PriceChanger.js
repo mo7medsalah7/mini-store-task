@@ -49,8 +49,8 @@ const CURRENCY_QUERY = gql`
 
 function PriceChanger() {
   const [showDropdownMenu, setShowDropdownMenu] = React.useState(false);
-  const [currencySymbol, setCurrencySymbol] = React.useState('$');
-  const { changeLabel } = usePrice();
+  const { changeLabel, currencySymbol, changeCurrencySymbol } = usePrice();
+
   //Show/ Hide Dropdown
   function togglePriceDropDown() {
     setShowDropdownMenu(!showDropdownMenu);
@@ -59,7 +59,7 @@ function PriceChanger() {
   async function handleChangeLabel(currency) {
     await changeLabel(currency);
     await setShowDropdownMenu(!showDropdownMenu);
-    await setCurrencySymbol(currency.symbol);
+    await changeCurrencySymbol(currency.symbol);
   }
 
   // Apollo useQuery

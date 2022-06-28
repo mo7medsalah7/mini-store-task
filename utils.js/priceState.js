@@ -34,6 +34,9 @@ function PriceStateProvider({ children }) {
   // define the default currency in a state
   const [slabel, setSlabel] = useState(nextCurrency);
 
+  // store the currency symbol in a state
+  const [currencySymbol, setCurrencySymbol] = useState('$');
+
   // Handling Change Currency Label
   function changeLabel(selected) {
     return setSlabel(selected);
@@ -47,11 +50,17 @@ function PriceStateProvider({ children }) {
     return price;
   }
 
+  function changeCurrencySymbol(symbol) {
+    return setCurrencySymbol(symbol);
+  }
+
   return (
     <LocalStateProvider
       value={{
         getPrice,
         changeLabel,
+        currencySymbol,
+        changeCurrencySymbol,
       }}
     >
       {children}

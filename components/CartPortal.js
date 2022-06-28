@@ -145,6 +145,7 @@ const CartButtons = styled.div`
 function CartPortal({ cartQuantity }) {
   const [showPortal, setShowPortal] = React.useState(false);
   const [showCartOverlay, setShowCartOverlay] = React.useState(false);
+  const { currencySymbol } = usePrice();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems, cartTotalAmount } = cart;
@@ -268,7 +269,10 @@ function CartPortal({ cartQuantity }) {
               <TotalPrice>
                 <span>Total</span>
                 <div>
-                  <p>${cartTotalAmount}</p>
+                  <p>
+                    {currencySymbol}
+                    {cartTotalAmount}
+                  </p>
                 </div>
               </TotalPrice>
               <CartButtons>

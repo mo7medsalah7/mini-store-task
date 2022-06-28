@@ -23,6 +23,8 @@ function CartStateProvider({ children }) {
     setCartOpen(true);
   }
 
+
+
   return (
     <LocalStateProvider
       value={{

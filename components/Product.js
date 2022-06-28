@@ -97,33 +97,6 @@ const Overlay = styled.div`
   }
 `;
 
-// Writing a Query to get specific product on id
-const PRODUCT_QUERY = gql`
-  query PRODUCT_QUERY($id: String!) {
-    product(id: $id) {
-      id
-      name
-      description
-      inStock
-      gallery
-      prices {
-        amount
-        currency {
-          label
-          symbol
-        }
-      }
-      attributes {
-        items {
-          displayValue
-          value
-          id
-        }
-      }
-    }
-  }
-`;
-
 function Product({ item, products }) {
   const dispatch = useDispatch();
   const { getPrice } = usePrice();
